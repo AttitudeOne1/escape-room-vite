@@ -1,0 +1,42 @@
+.page-content {
+    flex-grow: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+
+.not_found_error {
+    font-size: 2.5rem;
+    margin-bottom: 1.5rem;
+    color: #dc3545;
+}
+
+.link_not-found {
+    display: inline-block;
+    text-decoration: none;
+    color: #007bff;
+    transition: all 0.3s ease-in-out;
+    padding: 0.5rem 1rem;
+    border-radius: 0.25rem;
+    background-color: transparent;
+    border: 1px solid #007bff;
+}
+
+.link_not-found:hover {
+    background-color: #007bff;
+    color: white;
+}
+
+@media screen and (max-width: 768px) {
+    .not_found_error {
+        font-size: 2rem;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    .not_found_error {
+        font-size: 1.8rem;
+    }
+}
