@@ -1,3 +1,4 @@
+import { Helmet } from 'react-helmet-async';
 import Header from '../../components/header/header';
 import Footer from '../../components/footer/footer';
 
@@ -5,6 +6,9 @@ function QuestPage(): JSX.Element {
 
   return (
     <div className="wrapper">
+      <Helmet>
+        <title>Информация о квесте</title>
+      </Helmet>
       <Header/>
       <main className="decorated-page quest-page">
         <div className="decorated-page__decor" aria-hidden="true">
