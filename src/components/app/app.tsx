@@ -9,8 +9,28 @@ import ContactsPage from '../../pages/contacts/contacts-page';
 import QuestPage from '../../pages/quest-page/quest-page';
 import NotFoundPage from '../../pages/not-found-page/not-found-page';
 import LoginPage from '../../pages/login-page/login-page';
+import { useAppSelector } from '../../hooks';
+import { getLoadingStatus, getErrorStatus } from '../../store/quests-data/quest-data-selectors';
+import Loading from '../loading/loading';
+import ErrorPage from '../../pages/error-page/error-page';
 
 function App(): JSX.Element {
+  const isLoading = useAppSelector(getLoadingStatus);
+  const hasError = useAppSelector(getErrorStatus);
+
+  // !isAuthChecked ||
+  if (isLoading) {
+    return (
+      <Loading />
+    );
+  }
+
+  if (hasError) {
+    return (
+      <ErrorPage />
+    );
+  }
+
   return (
     <HelmetProvider>
       <BrowserRouter>

@@ -1,8 +1,24 @@
 import { Helmet } from 'react-helmet-async';
 import Header from '../../components/header/header';
 import Footer from '../../components/footer/footer';
+// import { useParams } from 'react-router-dom';
+// import { useAppSelector } from '../../hooks';
+// import { getQuestInformation } from '../../store/quests-data/quest-data-selectors';
+// import { useEffect } from 'react';
+// import { fetchQuestInformation } from '../../store/api-actions';
 
 function QuestPage(): JSX.Element {
+  // const questInformation = useAppSelector(getQuestInformation);
+  // console.log(questInformation);
+
+  //   const dispatch = useAppDispatch();
+
+  //   const { id } = useParams();
+  // // console.log(id);
+
+  //   useEffect(() => {
+  //     dispatch(fetchQuestInformation(id));
+  //   }, [dispatch, id]);
 
   return (
     <div className="wrapper">
