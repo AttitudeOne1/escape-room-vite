@@ -13,3 +13,16 @@ export enum AuthorizationStatus {
   NoAuth = 'NO_AUTH',
   Unknown = 'UNKNOWN',
 }
+
+export enum NameSpace {
+  Data = 'DATA',
+  User = 'USER',
+}
+
+export enum APIRoute {
+  Quest = '/quest',
+  // Comments = '/comments',
+  // Favorite = '/favorite',
+  Login = '/login',
+  Logout = '/logout',
+}

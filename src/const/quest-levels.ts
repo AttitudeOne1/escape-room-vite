@@ -10,7 +10,7 @@ type QuestLevelFilter = {
     title: string;
 }[];
 
-export const DEFAULT_TYPE = QuestLevel.Any;
+export const DEFAULT_LEVEL = QuestLevel.Any;
 
 export const FILTER_BY_LEVEL: QuestLevelFilter = [
   { level: QuestLevel.Any, title: 'Любой' },
