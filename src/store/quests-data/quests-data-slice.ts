@@ -1,7 +1,7 @@
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
-import { Quest, QuestList } from '../../types/types';
+import { BookingInfo, Quest, QuestList } from '../../types/types';
 import { NameSpace } from '../../const/const';
-import { fetchQuestInformation, fetchQuestsAction } from '../api-actions';
+import { fetchBookingInformation, fetchQuestInformation, fetchQuestsAction } from '../api-actions';
 import { DEFAULT_LEVEL, QuestLevel } from '../../const/quest-levels';
 import { DEFAULT_TYPE, QuestType } from '../../const/quest-types';
 
@@ -13,6 +13,8 @@ type QuestsData = {
     type: QuestType;
     questInformation: Quest | null;
     isQuestInformationLoading: boolean;
+    bookingInformation: BookingInfo;
+    isBookingInformationLoading: boolean;
 };
 
 const initialState: QuestsData = {
@@ -23,6 +25,8 @@ const initialState: QuestsData = {
   type: DEFAULT_TYPE,
   questInformation: null,
   isQuestInformationLoading: false,
+  bookingInformation: [],
+  isBookingInformationLoading: false,
 };
 
 export const questsDataSlice = createSlice({
@@ -62,6 +66,20 @@ export const questsDataSlice = createSlice({
       })
       .addCase(fetchQuestInformation.rejected, (state) => {
         state.isQuestInformationLoading = false;
+        state.hasError = true;
+      });
+
+    builder
+      .addCase(fetchBookingInformation.pending, (state) => {
+        state.isBookingInformationLoading = true;
+        state.hasError = false;
+      })
+      .addCase(fetchBookingInformation.fulfilled, (state, action) => {
+        state.bookingInformation = action.payload;
+        state.isBookingInformationLoading = false;
+      })
+      .addCase(fetchBookingInformation.rejected, (state) => {
+        state.isBookingInformationLoading = false;
         state.hasError = true;
       });
 
