@@ -1,61 +1,72 @@
 import { Helmet } from 'react-helmet-async';
 import Header from '../../components/header/header';
 import Footer from '../../components/footer/footer';
-// import { useParams } from 'react-router-dom';
-// import { useAppSelector } from '../../hooks';
-// import { getQuestInformation } from '../../store/quests-data/quest-data-selectors';
-// import { useEffect } from 'react';
-// import { fetchQuestInformation } from '../../store/api-actions';
+import { useAppDispatch, useAppSelector } from '../../hooks';
+import { getAuthorizationStatus } from '../../store/user-data/user-data-selectors';
+import { AppRoute, AuthorizationStatus } from '../../const/const';
+import { Link } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
+import { getQuestInformation } from '../../store/quests-data/quest-data-selectors';
+import { useEffect } from 'react';
+import { fetchQuestInformation } from '../../store/api-actions';
+import NotFoundPage from '../not-found-page/not-found-page';
 
 function QuestPage(): JSX.Element {
-  // const questInformation = useAppSelector(getQuestInformation);
-  // console.log(questInformation);
+  const authorizationStatus = useAppSelector(getAuthorizationStatus);
+  const questInformation = useAppSelector(getQuestInformation);
 
-  //   const dispatch = useAppDispatch();
+  const dispatch = useAppDispatch();
 
-  //   const { id } = useParams();
-  // // console.log(id);
+  const { id } = useParams();
 
-  //   useEffect(() => {
-  //     dispatch(fetchQuestInformation(id));
-  //   }, [dispatch, id]);
+  useEffect(() => {
+    if (id) {
+      dispatch(fetchQuestInformation(id));
+    }
+  }, [dispatch, id]);
+
+  if (!questInformation || id === undefined) {
+    return <NotFoundPage />;
+  }
 
   return (
     <div className="wrapper">
       <Helmet>
         <title>Информация о квесте</title>
       </Helmet>
-      <Header/>
+      <Header />
       <main className="decorated-page quest-page">
         <div className="decorated-page__decor" aria-hidden="true">
           <picture>
-            <source type="image/webp" srcSet="img/content/maniac/maniac-size-m.webp, img/content/maniac/maniac-size-m@2x.webp 2x"/>
-            <img src="img/content/maniac/maniac-size-m.jpg" srcSet="img/content/maniac/maniac-size-m@2x.jpg 2x" width="1366" height="768" alt=""/>
+            <source type="image/webp" srcSet={`${questInformation.coverImgWebp}, ${questInformation.coverImgWebp} 2x`} />
+            <img src={questInformation.coverImg} srcSet={`${questInformation.coverImg} 2x`} width="1366" height="768" alt="" />
           </picture>
         </div>
         <div className="container container--size-l">
           <div className="quest-page__content">
-            <h1 className="title title--size-l title--uppercase quest-page__title">Маньяк</h1>
-            <p className="subtitle quest-page__subtitle"><span className="visually-hidden">Жанр:</span>Ужасы
+            <h1 className="title title--size-l title--uppercase quest-page__title">{questInformation.title}</h1>
+            <p className="subtitle quest-page__subtitle"><span className="visually-hidden">Жанр:</span>{questInformation.type}
             </p>
             <ul className="tags tags--size-l quest-page__tags">
               <li className="tags__item">
                 <svg width="11" height="14" aria-hidden="true">
                   <use xlinkHref="#icon-person"></use>
-                </svg>3&ndash;6&nbsp;чел
+                </svg>{questInformation.peopleMinMax[0]}&ndash;{questInformation.peopleMinMax[1]}&nbsp;чел
               </li>
               <li className="tags__item">
                 <svg width="14" height="14" aria-hidden="true">
                   <use xlinkHref="#icon-level"></use>
-                </svg>Средний
+                </svg>{questInformation.level}
               </li>
             </ul>
-            <p className="quest-page__description">В&nbsp;комнате с&nbsp;приглушённым светом несколько человек, незнакомых друг с&nbsp;другом, приходят в&nbsp;себя. Никто не&nbsp;помнит, что произошло прошлым вечером. Руки и&nbsp;ноги связаны, но&nbsp;одному из&nbsp;вас получилось освободиться. На&nbsp;стене висит пугающий таймер и&nbsp;запущен отсчёт 60&nbsp;минут. Сможете&nbsp;ли вы&nbsp;разобраться в&nbsp;стрессовой ситуации, помочь другим, разобраться что произошло и&nbsp;выбраться из&nbsp;комнаты?</p>
-            <a className="btn btn--accent btn--cta quest-page__btn" href="booking.html">Забронировать</a>
+            <p className="quest-page__description">{questInformation.description}</p>
+            {authorizationStatus === AuthorizationStatus.Auth ?
+              <Link className="btn btn--accent btn--cta quest-page__btn" to={AppRoute.Booking}>Забронировать</Link> :
+              <Link className="btn btn--accent btn--cta quest-page__btn" to={AppRoute.Login}>Забронировать</Link>}
           </div>
         </div>
       </main>
-      <Footer/>
+      <Footer />
     </div>
   );
 }

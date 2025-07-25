@@ -1,6 +1,6 @@
 import { HelmetProvider } from 'react-helmet-async';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
-import { AppRoute, AuthorizationStatus } from '../../const/const';
+import { AppRoute } from '../../const/const';
 import PrivateRoute from '../private-route/private-route';
 import MainPage from '../../pages/main-page/main-page';
 import MyQuestsPage from '../../pages/my-quests-page/my-quests-page';
@@ -13,13 +13,14 @@ import { useAppSelector } from '../../hooks';
 import { getLoadingStatus, getErrorStatus } from '../../store/quests-data/quest-data-selectors';
 import Loading from '../loading/loading';
 import ErrorPage from '../../pages/error-page/error-page';
+import { getAuthCheckedStatus } from '../../store/user-data/user-data-selectors';
 
 function App(): JSX.Element {
+  const isAuthChecked = useAppSelector(getAuthCheckedStatus);
   const isLoading = useAppSelector(getLoadingStatus);
   const hasError = useAppSelector(getErrorStatus);
 
-  // !isAuthChecked ||
-  if (isLoading) {
+  if (!isAuthChecked || isLoading) {
     return (
       <Loading />
     );
@@ -42,7 +43,7 @@ function App(): JSX.Element {
           <Route
             path={AppRoute.MyQuests}
             element={
-              <PrivateRoute authorizationStatus={AuthorizationStatus.NoAuth} >
+              <PrivateRoute>
                 <MyQuestsPage />
               </PrivateRoute>
             }
@@ -50,7 +51,7 @@ function App(): JSX.Element {
           <Route
             path={AppRoute.Booking}
             element={
-              <PrivateRoute authorizationStatus={AuthorizationStatus.NoAuth} >
+              <PrivateRoute>
                 <BookingPage />
               </PrivateRoute>
             }
@@ -66,7 +67,12 @@ function App(): JSX.Element {
           <Route
             path={AppRoute.Quest}
             element={<QuestPage />}
-          />
+          >
+            <Route
+              path={`${AppRoute.Quest}/:id`}
+              element={<QuestPage />}
+            />
+          </Route>
           <Route
             path="*"
             element={<NotFoundPage />}

@@ -1,3 +1,5 @@
+import { Location } from '../types/types';
+
 export enum AppRoute {
   Main = '/',
   Login = '/login',
@@ -21,8 +23,15 @@ export enum NameSpace {
 
 export enum APIRoute {
   Quest = '/quest',
-  // Comments = '/comments',
+  Booking = '/booking',
   // Favorite = '/favorite',
   Login = '/login',
   Logout = '/logout',
 }
+
+export const CURRENT_MARKER_URL = '/img/svg/pin-active.svg';
+
+export const DEFAULT_OFFICE_LOCATION: Location = {
+  address: '',
+  coords: [59.968253, 30.317505]
+};

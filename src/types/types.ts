@@ -24,3 +24,26 @@ export type AuthData = {
 export type UserData = AuthData & {
     token: string;
 };
+
+export type BookingInfo = {
+    id: string;
+    location: {
+        address: string;
+        coords: [number];
+    };
+    slots: {
+        today: [{
+            time: string;
+            isAvailable: boolean;
+        }];
+        tomorrow: [{
+            time: string;
+            isAvailable: boolean;
+        }];
+    };
+}[];
+
+export type Location = {
+    address: string;
+    coords: [number, number];
+}
