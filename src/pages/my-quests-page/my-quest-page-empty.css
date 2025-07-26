@@ -1,0 +1,18 @@
+.quest-card_empty {
+    width: 100%;
+    max-width: 600px;
+    margin: 50px auto;
+    margin-left: 350px;
+    padding: 20px;
+    text-align: center;
+  }
+  
+  .empty-text {
+    margin-top: 10px;
+    font-size: 16px;
+    line-height: 1.5;
+  }
+
+  .btn--empty {
+    margin-top: 50px;
+  }

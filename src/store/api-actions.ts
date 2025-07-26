@@ -1,8 +1,8 @@
 import { AxiosInstance } from 'axios';
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import { AuthData, BookingInfo, Quest, QuestList, UserData } from '../types/types';
+import { AuthData, BookingInfoList, MyQuestList, Quest, QuestBooking, QuestList, UserData } from '../types/types';
 import { APIRoute } from '../const/const';
-import { State } from '../types/state';
+import { AppDispatch, State } from '../types/state';
 import { getToken, saveToken, dropToken } from '../services/token';
 
 export const fetchQuestsAction = createAsyncThunk<QuestList, undefined, {
@@ -27,16 +27,49 @@ export const fetchQuestInformation = createAsyncThunk<Quest, string, {
   }
 );
 
-export const fetchBookingInformation = createAsyncThunk<BookingInfo, string, {
+export const fetchBookingInformation = createAsyncThunk<BookingInfoList, string, {
   state: State;
   extra: AxiosInstance;
 }>(
   'data/fetchBookingInformation',
   async (id, { extra: api }) => {
-    const { data } = await api.get<BookingInfo>(`${APIRoute.Quest}/${id}${APIRoute.Booking}`);
+    const { data } = await api.get<BookingInfoList>(`${APIRoute.Quest}/${id}${APIRoute.Booking}`);
     return data;
   },
 );
+
+export const postQuestBooking = createAsyncThunk<QuestBooking, string, {
+  state: State;
+  extra: AxiosInstance;
+}>(
+  'data/postQuestBooking',
+  async (id, { extra: api }) => {
+    const { data } = await api.post<QuestBooking>(`${APIRoute.Quest}/${id}${APIRoute.Booking}`);
+    return data;
+  },
+);
+
+export const fetchMyQuestsInformation = createAsyncThunk<MyQuestList, undefined, {
+  state: State;
+  extra: AxiosInstance;
+}>(
+  'data/fetchMyQuestsInformation',
+  async (_arg, { extra: api }) => {
+    const { data } = await api.get<MyQuestList>(APIRoute.Reservation);
+    return data;
+  },
+);
+
+export const deleteMyQuest = createAsyncThunk<void, string, {
+  dispatch: AppDispatch;
+  state: State;
+  extra: AxiosInstance;
+}>(
+  'data/deleteMyQuest',
+  async (id, { dispatch, extra: api }) => {
+    await api.delete(`${APIRoute.Reservation}/${id}`);
+    dispatch(fetchMyQuestsInformation());
+  });
 
 export const checkAuthAction = createAsyncThunk<{ token: string; data: UserData }, undefined, {
   state: State;

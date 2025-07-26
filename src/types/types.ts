@@ -25,12 +25,14 @@ export type UserData = AuthData & {
     token: string;
 };
 
+export type Location = {
+    address: string;
+    coords: [number, number];
+};
+
 export type BookingInfo = {
     id: string;
-    location: {
-        address: string;
-        coords: [number];
-    };
+    location: Location;
     slots: {
         today: [{
             time: string;
@@ -41,9 +43,24 @@ export type BookingInfo = {
             isAvailable: boolean;
         }];
     };
-}[];
+};
 
-export type Location = {
-    address: string;
-    coords: [number, number];
+export type BookingInfoList = BookingInfo[];
+
+export type QuestBooking = {
+    date: string;
+    time: string;
+    contactPerson: string;
+    phone: string;
+    withChildren: boolean;
+    peopleCount: number;
+    placeId?: string;
 }
+
+export type MyQuest = QuestBooking & {
+    id: string;
+    location: Location;
+    quest: QuestItem;
+};
+
+export type MyQuestList = MyQuest[];
