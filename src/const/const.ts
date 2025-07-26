@@ -17,19 +17,24 @@ export enum AuthorizationStatus {
 }
 
 export enum NameSpace {
-  Data = 'DATA',
+  Quest = 'QUEST',
   User = 'USER',
+  Booking = 'BOOKING',
 }
 
 export enum APIRoute {
   Quest = '/quest',
   Booking = '/booking',
-  // Favorite = '/favorite',
+  Reservation = '/reservation',
   Login = '/login',
   Logout = '/logout',
 }
 
 export const CURRENT_MARKER_URL = '/img/svg/pin-active.svg';
+
+export const URL_MARKER_DEFAULT = '/img/svg/pin-default.svg';
+
+export const URL_MARKER_CURRENT = '/img/svg/pin-active.svg';
 
 export const DEFAULT_OFFICE_LOCATION: Location = {
   address: '',

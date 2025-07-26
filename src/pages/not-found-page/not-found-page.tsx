@@ -16,7 +16,9 @@ function NotFoundPage(): JSX.Element {
       <main className="page-content">
         <div className="container">
           <h1 className="not_found_error">404. Page not found</h1>
-          <Link className="link_not-found" to={AppRoute.Main}>Вернуться на главную</Link>
+          <Link className="link" to={AppRoute.Main}>
+            <button className="btn btn--accent btn--general" type="button">Вернуться на главную</button>
+          </Link>
         </div>
       </main>
       <Footer />
