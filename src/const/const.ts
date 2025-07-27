@@ -30,6 +30,11 @@ export enum APIRoute {
   Logout = '/logout',
 }
 
+export enum Date {
+  Today = 'today',
+  Tomorrow = 'tomorrow'
+}
+
 export const CURRENT_MARKER_URL = '/img/svg/pin-active.svg';
 
 export const URL_MARKER_DEFAULT = '/img/svg/pin-default.svg';

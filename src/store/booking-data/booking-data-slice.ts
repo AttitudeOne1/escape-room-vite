@@ -1,17 +1,28 @@
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 import { BookingInfo, BookingInfoList, MyQuestList, QuestBooking } from '../../types/types';
 import { NameSpace } from '../../const/const';
-import { fetchBookingInformation, fetchMyQuestsInformation, postQuestBooking } from '../api-actions';
+import { fetchBookingInformation, fetchMyQuestsInformation } from '../api-actions';
+
+const initialFormData: QuestBooking = {
+  date: '',
+  time: '',
+  contactPerson: '',
+  phone: '',
+  withChildren: false,
+  peopleCount: 0,
+  placeId: '',
+};
 
 type BookingData = {
     bookingInformation: BookingInfoList;
     isBookingInformationLoading: boolean;
     hasBookingError: boolean;
     selectedQuestPlace: BookingInfo;
-    questBookingForm: QuestBooking;
+    questFormData: QuestBooking;
     isBookingFormLoading: boolean;
     myQuests: MyQuestList;
     isMyQuestsLoading: boolean;
+    selectedQuestPlaceId: string;
 };
 
 const initialState: BookingData = {
@@ -29,18 +40,11 @@ const initialState: BookingData = {
       tomorrow: [{ time: 'string', isAvailable: false }],
     }
   },
-  questBookingForm: {
-    date: '',
-    time: '',
-    contactPerson: '',
-    phone: '',
-    withChildren: false,
-    peopleCount: 0,
-    placeId: '',
-  },
+  questFormData: initialFormData,
   isBookingFormLoading: false,
   myQuests: [],
   isMyQuestsLoading: false,
+  selectedQuestPlaceId: '',
 };
 
 export const bookingDataSlice = createSlice({
@@ -49,6 +53,27 @@ export const bookingDataSlice = createSlice({
   reducers: {
     setSelectedQuestPlace: (state, action: PayloadAction<BookingInfo>) => {
       state.selectedQuestPlace = action.payload;
+    },
+    setSelectedQuestPlaceId: (state, action: PayloadAction<string>) => {
+      state.questFormData.placeId = action.payload;
+    },
+    setUserName: (state, action: PayloadAction<string>) => {
+      state.questFormData.contactPerson = action.payload;
+    },
+    setUserPhone: (state, action: PayloadAction<string>) => {
+      state.questFormData.phone = action.payload;
+    },
+    setPeopleCount: (state, action: PayloadAction<number>) => {
+      state.questFormData.peopleCount = action.payload;
+    },
+    setIsWithChildren: (state, action: PayloadAction<boolean>) => {
+      state.questFormData.withChildren = action.payload;
+    },
+    setSelectedTime: (state, action: PayloadAction<string>) => {
+      state.questFormData.time = action.payload;
+    },
+    setSelectedDate: (state, action: PayloadAction<string>) => {
+      state.questFormData.date = action.payload;
     },
   },
   extraReducers(builder) {
@@ -64,20 +89,6 @@ export const bookingDataSlice = createSlice({
       })
       .addCase(fetchBookingInformation.rejected, (state) => {
         state.isBookingInformationLoading = false;
-        state.hasBookingError = true;
-      });
-
-    builder
-      .addCase(postQuestBooking.pending, (state) => {
-        state.isBookingFormLoading = true;
-        state.hasBookingError = false;
-      })
-      .addCase(postQuestBooking.fulfilled, (state, action) => {
-        state.questBookingForm = action.payload;
-        state.isBookingFormLoading = false;
-      })
-      .addCase(postQuestBooking.rejected, (state) => {
-        state.isBookingFormLoading = false;
         state.hasBookingError = true;
       });
 
@@ -98,4 +109,7 @@ export const bookingDataSlice = createSlice({
   }
 });
 
-export const { setSelectedQuestPlace } = bookingDataSlice.actions;
+export const { setSelectedQuestPlace, setUserName, setUserPhone,
+  setPeopleCount, setIsWithChildren, setSelectedTime,
+  setSelectedDate, setSelectedQuestPlaceId
+} = bookingDataSlice.actions;

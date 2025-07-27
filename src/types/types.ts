@@ -54,8 +54,13 @@ export type QuestBooking = {
     phone: string;
     withChildren: boolean;
     peopleCount: number;
-    placeId?: string;
+    placeId: string;
 }
+
+export type PostData = {
+    postData: QuestBooking;
+    id: string;
+  }
 
 export type MyQuest = QuestBooking & {
     id: string;

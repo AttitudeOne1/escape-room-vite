@@ -1,9 +1,10 @@
 import { AxiosInstance } from 'axios';
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import { AuthData, BookingInfoList, MyQuestList, Quest, QuestBooking, QuestList, UserData } from '../types/types';
+import { AuthData, BookingInfoList, MyQuestList, PostData, Quest, QuestList, UserData } from '../types/types';
 import { APIRoute } from '../const/const';
 import { AppDispatch, State } from '../types/state';
 import { getToken, saveToken, dropToken } from '../services/token';
+import { setSelectedQuestPlace } from './booking-data/booking-data-slice';
 
 export const fetchQuestsAction = createAsyncThunk<QuestList, undefined, {
   state: State;
@@ -16,36 +17,39 @@ export const fetchQuestsAction = createAsyncThunk<QuestList, undefined, {
   },
 );
 
-export const fetchQuestInformation = createAsyncThunk<Quest, string, {
-  state: State;
-  extra: AxiosInstance;
-}>(
-  'data/fetchQuestInformation',
-  async (id, { extra: api }) => {
-    const { data } = await api.get<Quest>(`${APIRoute.Quest}/${id}`);
-    return data;
-  }
-);
-
 export const fetchBookingInformation = createAsyncThunk<BookingInfoList, string, {
+  dispatch: AppDispatch;
   state: State;
   extra: AxiosInstance;
 }>(
   'data/fetchBookingInformation',
-  async (id, { extra: api }) => {
+  async (id, { dispatch, extra: api }) => {
     const { data } = await api.get<BookingInfoList>(`${APIRoute.Quest}/${id}${APIRoute.Booking}`);
+    dispatch(setSelectedQuestPlace(data[0]));
     return data;
   },
 );
 
-export const postQuestBooking = createAsyncThunk<QuestBooking, string, {
+export const fetchQuestInformation = createAsyncThunk<Quest, string, {
+  dispatch: AppDispatch;
+  state: State;
+  extra: AxiosInstance;
+}>(
+  'data/fetchQuestInformation',
+  async (id, { dispatch, extra: api }) => {
+    const { data } = await api.get<Quest>(`${APIRoute.Quest}/${id}`);
+    dispatch(fetchBookingInformation(id));
+    return data;
+  }
+);
+
+export const postQuestBooking = createAsyncThunk<void, PostData, {
   state: State;
   extra: AxiosInstance;
 }>(
   'data/postQuestBooking',
-  async (id, { extra: api }) => {
-    const { data } = await api.post<QuestBooking>(`${APIRoute.Quest}/${id}${APIRoute.Booking}`);
-    return data;
+  async ({ postData, id }, { extra: api }) => {
+    await api.post<PostData>(`${APIRoute.Quest}/${id}${APIRoute.Booking}`, postData);
   },
 );
 
