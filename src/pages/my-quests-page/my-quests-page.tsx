@@ -10,7 +10,6 @@ import MyQuestCard from '../../components/card/my-quest-card';
 
 function MyQuestsPage(): JSX.Element {
   const myQuests = useAppSelector(getMyQuests);
-  // console.log(myQuests);
 
   const dispatch = useAppDispatch();
 

@@ -15,7 +15,7 @@ function MyQuestCard({reservationInfo}: MyQuestCardProps): JSX.Element {
   return (
     <div className="quest-card">
       <div className="quest-card__img">
-        <Link to={`${AppRoute.Quest}/${reservationInfo.id}`}>
+        <Link to={`${AppRoute.Quest}/${reservationInfo.quest.id}`}>
           <picture>
             <source type="image/webp" srcSet={reservationInfo.quest.previewImgWebp} />
             <img src={reservationInfo.quest.previewImg} srcSet={reservationInfo.quest.previewImgWebp} width="344" height="232" alt="Мужчина в маске в тёмном переходе." />
@@ -24,7 +24,7 @@ function MyQuestCard({reservationInfo}: MyQuestCardProps): JSX.Element {
       </div>
       <div className="quest-card__content">
         <div className="quest-card__info-wrapper">
-          <a className="quest-card__link" href="quest.html">{reservationInfo.quest.title}</a>
+          <Link to={`${AppRoute.Quest}/${reservationInfo.quest.id}`} className="quest-card__link">{reservationInfo.quest.title}</Link>
           <span className="quest-card__info">[{reservationInfo.date},&nbsp;{reservationInfo.time}. {reservationInfo.location.address}]</span>
         </div>
         <ul className="tags quest-card__tags">
