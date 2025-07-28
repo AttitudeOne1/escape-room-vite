@@ -1,31 +1,22 @@
 import { Helmet } from 'react-helmet-async';
 import Header from '../../components/header/header';
 import Footer from '../../components/footer/footer';
-import { getAuthorizationStatus } from '../../store/user-data/user-data-selectors';
-import { useAppDispatch, useAppSelector } from '../../hooks';
-import { FormEvent, useEffect, useRef } from 'react';
-import { AuthorizationStatus, AppRoute } from '../../const/const';
-import { redirectToRoute } from '../../store/actions';
+import { useAppDispatch } from '../../hooks';
+import { FormEvent, useRef } from 'react';
+import { AppRoute } from '../../const/const';
 import { loginAction } from '../../store/api-actions';
 import { useNavigate } from 'react-router-dom';
 
 function LoginPage(): JSX.Element {
-  const authorizationStatus = useAppSelector(getAuthorizationStatus);
   const emailRef = useRef<HTMLInputElement | null>(null);
   const passwordRef = useRef<HTMLInputElement | null>(null);
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
-  useEffect(() => {
-    if (authorizationStatus === AuthorizationStatus.Auth) {
-      dispatch(redirectToRoute(AppRoute.Main));
-    }
-  }, [dispatch, authorizationStatus]);
-
   const handleSubmit = (evt: FormEvent<HTMLFormElement>) => {
     evt.preventDefault();
 
-    if (emailRef.current !== null && passwordRef.current !== null) {
+    if (emailRef.current && passwordRef.current) {
       dispatch(loginAction({
         email: emailRef.current.value,
         password: passwordRef.current.value

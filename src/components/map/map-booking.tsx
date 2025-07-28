@@ -2,7 +2,7 @@ import { MapContainer, Marker, TileLayer } from 'react-leaflet';
 import { Icon } from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 import { useAppDispatch, useAppSelector } from '../../hooks';
-import { setSelectedQuestPlace } from '../../store/booking-data/booking-data-slice';
+import { setSelectedQuestPlace, setSelectedQuestPlaceId } from '../../store/booking-data/booking-data-slice';
 import { BookingInfoList } from '../../types/types';
 import { getSelectedQuestPlace } from '../../store/booking-data/booking-data-selectors';
 import { URL_MARKER_DEFAULT, URL_MARKER_CURRENT } from '../../const/const';
@@ -55,6 +55,7 @@ function MapBooking({ questLocations, latitude, longitude }: MapBookingProps): J
                   eventHandlers={{
                     click: () => {
                       dispatch(setSelectedQuestPlace(location));
+                      dispatch(setSelectedQuestPlaceId(location.id));
                     },
                   }}
                 >

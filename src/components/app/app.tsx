@@ -1,5 +1,4 @@
-import { HelmetProvider } from 'react-helmet-async';
-import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import { Route, Routes } from 'react-router-dom';
 import { AppRoute } from '../../const/const';
 import PrivateRoute from '../private-route/private-route';
 import MainPage from '../../pages/main-page/main-page';
@@ -28,58 +27,53 @@ function App(): JSX.Element {
 
   if (hasError) {
     return (
-      <ErrorPage />
-    );
+      <ErrorPage />);
   }
 
   return (
-    <HelmetProvider>
-      <BrowserRouter>
-        <Routes>
-          <Route
-            path={AppRoute.Main}
-            element={<MainPage />}
-          />
-          <Route
-            path={AppRoute.MyQuests}
-            element={
-              <PrivateRoute>
-                <MyQuestsPage />
-              </PrivateRoute>
-            }
-          />
-          <Route
-            path={AppRoute.Booking}
-            element={
-              <PrivateRoute>
-                <BookingPage />
-              </PrivateRoute>
-            }
-          />
-          <Route
-            path={AppRoute.Login}
-            element={<LoginPage />}
-          />
-          <Route
-            path={AppRoute.Contacts}
-            element={<ContactsPage />}
-          />
-          <Route
-            path={AppRoute.Quest}
-            element={<QuestPage />}
-          >
-            <Route
-              path={`${AppRoute.Quest}/:id`}
-              element={<QuestPage />}
-            />
-          </Route>
-          <Route
-            path="*"
-            element={<NotFoundPage />}
-          />
-        </Routes>
-      </BrowserRouter>
-    </HelmetProvider>
+    <Routes>
+      <Route
+        path={AppRoute.Main}
+        element={<MainPage />}
+      />
+      <Route
+        path={AppRoute.MyQuests}
+        element={
+          <PrivateRoute>
+            <MyQuestsPage />
+          </PrivateRoute>
+        }
+      />
+      <Route
+        path={AppRoute.Booking}
+        element={
+          <PrivateRoute>
+            <BookingPage />
+          </PrivateRoute>
+        }
+      />
+      <Route
+        path={AppRoute.Login}
+        element={<LoginPage />}
+      />
+      <Route
+        path={AppRoute.Contacts}
+        element={<ContactsPage />}
+      />
+      <Route
+        path={AppRoute.Quest}
+        element={<QuestPage />}
+      >
+        <Route
+          path={`${AppRoute.Quest}/:id`}
+          element={<QuestPage />}
+        />
+      </Route>
+      <Route
+        path="*"
+        element={<NotFoundPage />}
+      />
+    </Routes>
   );
 }
 

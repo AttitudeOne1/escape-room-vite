@@ -29,4 +29,3 @@ function QuestTypes({activeType, onTypeChange}: QuestTypesProps): JSX.Element {
 }
 
 export default QuestTypes;
-// checked

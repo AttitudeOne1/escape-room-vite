@@ -28,4 +28,5 @@ function ErrorPage(): JSX.Element {
     </div>
   );
 }
+
 export default ErrorPage;

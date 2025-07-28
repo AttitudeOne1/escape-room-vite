@@ -22,6 +22,7 @@ type BookingData = {
     isBookingFormLoading: boolean;
     myQuests: MyQuestList;
     isMyQuestsLoading: boolean;
+    hasMyQuestsError: boolean;
     selectedQuestPlaceId: string;
 };
 
@@ -44,6 +45,7 @@ const initialState: BookingData = {
   isBookingFormLoading: false,
   myQuests: [],
   isMyQuestsLoading: false,
+  hasMyQuestsError: false,
   selectedQuestPlaceId: '',
 };
 
@@ -95,7 +97,7 @@ export const bookingDataSlice = createSlice({
     builder
       .addCase(fetchMyQuestsInformation.pending, (state) => {
         state.isMyQuestsLoading = true;
-        state.hasBookingError = false;
+        state.hasMyQuestsError = false;
       })
       .addCase(fetchMyQuestsInformation.fulfilled, (state, action) => {
         state.myQuests = action.payload;
@@ -103,7 +105,7 @@ export const bookingDataSlice = createSlice({
       })
       .addCase(fetchMyQuestsInformation.rejected, (state) => {
         state.isMyQuestsLoading = false;
-        state.hasBookingError = true;
+        state.hasMyQuestsError = true;
       });
 
   }
