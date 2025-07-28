@@ -10,8 +10,8 @@ type MapProps = {
 
 const currentCustomIcon = new Icon({
   iconUrl: CURRENT_MARKER_URL,
-  iconSize: [23, 42],
-  iconAnchor: [11.5, 42],
+  iconSize: [40, 40],
+  iconAnchor: [20, 40]
 });
 
 function Map({ latitude, longitude }: MapProps): JSX.Element {

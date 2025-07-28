@@ -9,23 +9,21 @@ import { getBookingInformation, getSelectedQuestPlace } from '../../store/bookin
 import Loading from '../../components/loading/loading';
 import BookingForm from '../../components/booking/booking-form';
 import MapBooking from '../../components/map/map-booking';
-import { setSelectedQuestPlaceId } from '../../store/booking-data/booking-data-slice';
 
 function BookingPage(): JSX.Element {
   const questInformation = useAppSelector(getQuestInformation);
   const bookingInformation = useAppSelector(getBookingInformation);
   const selectedLocation = useAppSelector(getSelectedQuestPlace);
 
-  const {location, id} = selectedLocation;
+  const {location} = selectedLocation;
 
   const dispatch = useAppDispatch();
 
   useEffect(() => {
     if (questInformation && questInformation.id) {
       dispatch(fetchBookingInformation(questInformation.id));
-      dispatch(setSelectedQuestPlaceId(id));
     }
-  }, [dispatch, questInformation, id]);
+  }, [dispatch, questInformation]);
 
   if(!bookingInformation){
     <Loading/>;
